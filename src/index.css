@@ -281,7 +281,7 @@ img { max-width: 100%; display: block; }
 }
 .hero__canvas {
   position: absolute; inset: 0; z-index: 0;
-  opacity: 0.35;
+  opacity: 0.55;
 }
 .hero__grid {
   position: relative; z-index: 1;

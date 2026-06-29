@@ -1,135 +1,106 @@
 import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
 import { prefersReducedMotion } from '../lib/anim'
 
-// Hero backdrop: a dot terrain breathing in sine waves, warm gray ink
-// tinted cobalt at the crests, with gentle pointer parallax.
-// Custom shader keeps it at one draw call; normal blending suits paper.
-const VERT = /* glsl */ `
-  uniform float uTime;
-  varying float vElev;
-  void main() {
-    vec3 p = position;
-    float e = sin(p.x * 0.32 + uTime * 0.55) * 0.85
-            + cos(p.y * 0.24 + uTime * 0.4) * 0.85
-            + sin((p.x + p.y) * 0.12 + uTime * 0.28) * 0.6;
-    p.z += e;
-    vElev = e;
-    vec4 mv = modelViewMatrix * vec4(p, 1.0);
-    gl_PointSize = (1.9 + vElev * 0.7) * (28.0 / -mv.z);
-    gl_Position = projectionMatrix * mv;
-  }
-`
-
-const FRAG = /* glsl */ `
-  varying float vElev;
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    if (d > 0.5) discard;
-    vec3 ink = vec3(0.56, 0.55, 0.51);
-    vec3 vermillion = vec3(0.90, 0.22, 0.12);
-    vec3 col = mix(ink, vermillion, smoothstep(0.3, 2.0, vElev));
-    float a = smoothstep(0.5, 0.12, d) * 0.55;
-    gl_FragColor = vec4(col, a);
-  }
-`
-
+// Hero backdrop: particle flow field following a sin/cos vector field.
+// Ink-colored streams with sparse vermillion accents; mouse nudges the flow.
 export default function ThreeField() {
-  const mountRef = useRef(null)
+  const canvasRef = useRef(null)
 
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const mount = mountRef.current
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
 
-    // No WebGL (blocked, ancient GPU, headless): skip the backdrop
-    // rather than letting the constructor throw and unmount the app.
-    let renderer
-    try {
-      renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true })
-    } catch {
-      return
+    const dpr = Math.min(window.devicePixelRatio, 2)
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth  * dpr
+      canvas.height = canvas.offsetHeight * dpr
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(mount.clientWidth, mount.clientHeight)
-    mount.appendChild(renderer.domElement)
+    resize()
+    window.addEventListener('resize', resize)
 
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(
-      55, mount.clientWidth / mount.clientHeight, 0.1, 100,
-    )
-    camera.position.set(0, -7.5, 7)
-    camera.lookAt(0, 2, 0)
-
-    const COLS = 130
-    const ROWS = 80
-    const positions = new Float32Array(COLS * ROWS * 3)
-    let i = 0
-    for (let y = 0; y < ROWS; y++) {
-      for (let x = 0; x < COLS; x++) {
-        positions[i++] = (x / (COLS - 1) - 0.5) * 46
-        positions[i++] = (y / (ROWS - 1) - 0.5) * 30
-        positions[i++] = 0
-      }
-    }
-    const geo = new THREE.BufferGeometry()
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-
-    const mat = new THREE.ShaderMaterial({
-      uniforms: { uTime: { value: 0 } },
-      vertexShader: VERT,
-      fragmentShader: FRAG,
-      transparent: true,
-      depthWrite: false,
+    const N = 420
+    const mkParticle = () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      life: Math.random() * 220 + 60,
+      speed: Math.random() * 1.1 + 0.35,
+      accent: Math.random() < 0.055,
     })
+    const particles = Array.from({ length: N }, mkParticle)
 
-    const points = new THREE.Points(geo, mat)
-    points.rotation.x = -0.45
-    scene.add(points)
-
-    const pointer = { x: 0, y: 0 }
-    const onPointer = (e) => {
-      pointer.x = (e.clientX / window.innerWidth - 0.5) * 2
-      pointer.y = (e.clientY / window.innerHeight - 0.5) * 2
+    const mouse = { x: 0.5, y: 0.5 }
+    const onMove = (e) => {
+      mouse.x = e.clientX / window.innerWidth
+      mouse.y = e.clientY / window.innerHeight
     }
-    window.addEventListener('pointermove', onPointer, { passive: true })
+    window.addEventListener('pointermove', onMove, { passive: true })
 
-    const onResize = () => {
-      const w = mount.clientWidth
-      const h = mount.clientHeight
-      renderer.setSize(w, h)
-      camera.aspect = w / h
-      camera.updateProjectionMatrix()
-    }
-    window.addEventListener('resize', onResize)
-
-    const clock = new THREE.Clock()
+    let t = 0
     let raf
-    let visible = true
-    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting })
-    io.observe(mount)
 
     const tick = () => {
       raf = requestAnimationFrame(tick)
-      if (!visible) return
-      mat.uniforms.uTime.value = clock.getElapsedTime()
-      camera.position.x += (pointer.x * 1.4 - camera.position.x) * 0.04
-      camera.position.z += (-pointer.y * 0.6 + 7 - camera.position.z) * 0.04
-      camera.lookAt(0, 2, 0)
-      renderer.render(scene, camera)
+      t += 0.004
+
+      // soft fade trail — paper color
+      ctx.fillStyle = 'rgba(251,251,249,0.038)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      const mx = (mouse.x - 0.5) * 1.4
+      const my = (mouse.y - 0.5) * 1.0
+
+      for (const p of particles) {
+        const nx = p.x / canvas.width
+        const ny = p.y / canvas.height
+
+        // multi-frequency pseudo-noise angle
+        const angle =
+          (Math.sin(nx * 3.8 + t * 0.75 + mx * 0.9) *
+           Math.cos(ny * 2.6 + t * 0.5  + my * 0.7) +
+           Math.sin((nx + ny) * 2.2 + t * 0.55) * 0.7 +
+           Math.cos(nx * 1.4 - ny * 1.8 + t * 0.35) * 0.5) *
+          Math.PI * 1.05
+
+        const dx = Math.cos(angle) * p.speed
+        const dy = Math.sin(angle) * p.speed
+
+        const fade = Math.min(p.life / 70, 1)
+        const alpha = fade * (p.accent ? 0.72 : 0.28)
+
+        ctx.beginPath()
+        ctx.moveTo(p.x, p.y)
+        p.x += dx
+        p.y += dy
+        ctx.lineTo(p.x, p.y)
+        ctx.strokeStyle = p.accent
+          ? `rgba(229,55,31,${alpha})`
+          : `rgba(10,9,8,${alpha})`
+        ctx.lineWidth = p.accent ? 1.6 : 1.1
+        ctx.stroke()
+
+        p.life--
+        const out = p.x < -2 || p.x > canvas.width + 2 ||
+                    p.y < -2 || p.y > canvas.height + 2
+        if (p.life <= 0 || out) Object.assign(p, mkParticle())
+      }
     }
     tick()
 
     return () => {
       cancelAnimationFrame(raf)
-      io.disconnect()
-      window.removeEventListener('pointermove', onPointer)
-      window.removeEventListener('resize', onResize)
-      geo.dispose()
-      mat.dispose()
-      renderer.dispose()
-      mount.removeChild(renderer.domElement)
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('pointermove', onMove)
     }
   }, [])
 
-  return <div className="hero__canvas" ref={mountRef} aria-hidden="true" />
+  return (
+    <canvas
+      ref={canvasRef}
+      className="hero__canvas"
+      style={{ width: '100%', height: '100%' }}
+      aria-hidden="true"
+    />
+  )
 }
