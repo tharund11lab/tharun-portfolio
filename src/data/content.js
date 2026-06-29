@@ -36,8 +36,8 @@ export const projects = [
     id: 'sparky',
     index: '01',
     company: 'Walmart Global Tech',
-    project: 'Sparky — Walmart’s AI Shopping Agent',
-    period: 'Apr 2025 — Present',
+    project: "Sparky - Walmart’s AI Shopping Agent",
+    period: 'Apr 2025 - Present',
     region: 'USA',
     narrative: [
       'Sparky is Walmart’s AI-powered shopping assistant that helps customers discover products, compare options, and receive personalized recommendations through natural-language conversations. It was built to make product discovery feel intuitive and conversational for millions of Walmart customers across web and mobile.',
@@ -50,11 +50,11 @@ export const projects = [
     id: 'ksu',
     index: '02',
     company: 'Kennesaw State University',
-    project: 'Campus Hub — One Platform for a University',
-    period: 'Jan 2024 — Dec 2024',
+    project: 'Campus Hub - One Platform for a University',
+    period: 'Jan 2024 - Dec 2024',
     region: 'USA',
     narrative: [
-      'Campus Hub is a unified student and faculty platform that brings Owl Express, D2L Brightspace, DegreeWorks, and KSUMail together behind a single responsive interface. Before it, students juggled several disconnected systems to register for classes, track grades, and check financial aid — slow, confusing, and error-prone, especially during peak registration.',
+      'Campus Hub is a unified student and faculty platform that brings Owl Express, D2L Brightspace, DegreeWorks, and KSUMail together behind a single responsive interface. Before it, students juggled several disconnected systems to register for classes, track grades, and check financial aid - slow, confusing, and error-prone, especially during peak registration.',
       'I built the platform end to end: the React, Next.js, and TypeScript front end, the Node.js and Spring Boot APIs behind it, and the integrations into Ellucian Banner and DegreeWorks with query tuning and caching to keep dashboards fast. I owned the Java/Spring Boot services over PostgreSQL and the reconciliation layer that keeps enrollment, grades, and financial-aid data consistent across every connected system.',
       'The result was one calm front door to the university: dashboards loaded noticeably faster, manual data corrections across systems dropped sharply, and zero-downtime deploys on AWS with Docker and GitHub Actions let us ship through peak registration without disrupting students.',
     ],
@@ -64,13 +64,13 @@ export const projects = [
     id: 'hcl',
     index: '03',
     company: 'HCL Tech',
-    project: 'Enterprise Banking — Payments at Scale',
-    period: 'May 2020 — Dec 2022',
+    project: 'Enterprise Banking - Payments at Scale',
+    period: 'May 2020 - Dec 2022',
     region: 'India',
     narrative: [
-      'This was an enterprise banking platform for invoice tracking and payment workflows used by corporate banking customers across regions. Payments at this scale cannot drop or double-charge, so the system needed exactly-once processing and resilience under heavy, bursty load — while a legacy monolith underneath was slowing every release down to days.',
+      'This was an enterprise banking platform for invoice tracking and payment workflows used by corporate banking customers across regions. Payments at this scale cannot drop or double-charge, so the system needed exactly-once processing and resilience under heavy, bursty load - while a legacy monolith underneath was slowing every release down to days.',
       'I worked across the stack: responsive React and TypeScript interfaces backed by Java and Spring Boot APIs, and the event-driven payment engine built on Kafka with idempotent retries and dead-letter queues so transactions stayed correct under pressure. I also built ETL pipelines in Python and BigQuery that fed clean data to downstream finance, analytics, and compliance teams.',
-      'I helped modernize the legacy backend into microservices on Docker, Terraform, and Google Cloud (Cloud Run and GKE), which cut release cycles from days to hours, reduced peak-period response times, and brought down production defects after the migration — a more reliable payments platform that the business could evolve quickly.',
+      'I helped modernize the legacy backend into microservices on Docker, Terraform, and Google Cloud (Cloud Run and GKE), which cut release cycles from days to hours, reduced peak-period response times, and brought down production defects after the migration - a more reliable payments platform that the business could evolve quickly.',
     ],
     stack: ['React', 'TypeScript', 'Java', 'Spring Boot', 'Kafka', 'PostgreSQL', 'Python', 'BigQuery', 'Docker', 'Terraform', 'GKE', 'Cloud Run'],
   },
@@ -118,7 +118,7 @@ export const principles = [
   },
   {
     k: 'Own it end to end',
-    v: 'From the React surface to the Kafka consumer to the Terraform that ships it — I take features the whole way and stay accountable for them in production.',
+    v: 'From the React surface to the Kafka consumer to the Terraform that ships it - I take features the whole way and stay accountable for them in production.',
   },
   {
     k: 'Measure, then move',
@@ -126,16 +126,16 @@ export const principles = [
   },
   {
     k: 'Build with AI, deliberately',
-    v: 'Claude Code, Copilot, Cursor, and Codex for scaffolding and refactors — paired with judgment, tests, and review, not in place of them.',
+    v: 'Claude Code, Copilot, Cursor, and Codex for scaffolding and refactors - paired with judgment, tests, and review, not in place of them.',
   },
 ]
 
 export const timeline = [
-  { kind: 'work', role: 'Software Engineer', org: 'Walmart Global Tech', period: 'Apr 2025 — Present', place: 'USA' },
-  { kind: 'work', role: 'Software Engineer', org: 'Kennesaw State University', period: 'Jan 2024 — Dec 2024', place: 'USA' },
-  { kind: 'edu', role: 'M.S. Information Technology', org: 'Kennesaw State University', period: '2023 — 2024', place: 'USA' },
-  { kind: 'work', role: 'Software Engineer', org: 'HCL Tech', period: 'May 2020 — Dec 2022', place: 'India' },
-  { kind: 'edu', role: 'B.S. Computer Science & Engineering', org: 'Lovely Professional University', period: '2018 — 2022', place: 'India' },
+  { kind: 'work', role: 'Software Engineer', org: 'Walmart Global Tech', period: 'Apr 2025 - Present', place: 'USA' },
+  { kind: 'work', role: 'Software Engineer', org: 'Kennesaw State University', period: 'Jan 2024 - Dec 2024', place: 'USA' },
+  { kind: 'edu', role: 'M.S. Information Technology', org: 'Kennesaw State University', period: '2023 - 2024', place: 'USA' },
+  { kind: 'work', role: 'Software Engineer', org: 'HCL Tech', period: 'May 2020 - Dec 2022', place: 'India' },
+  { kind: 'edu', role: 'B.S. Computer Science & Engineering', org: 'Lovely Professional University', period: '2018 - 2022', place: 'India' },
 ]
 
 export const certifications = [

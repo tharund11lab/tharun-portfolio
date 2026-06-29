@@ -70,7 +70,7 @@ export default function Experience() {
           <span className="shead__num">02</span>
           <span className="shead__slash">/</span>
           <h2 className="shead__title">Experience</h2>
-          <span className="shead__note">scroll — pages slide left</span>
+          <span className="shead__note">scroll - pages slide left</span>
         </div>
       </div>
 

@@ -48,7 +48,7 @@ export default function Preloader({ onDone }) {
         <sup>%</sup>
       </div>
       <p className="preloader__tag">
-        Tharun Derangula — full-stack software engineer
+        Tharun Derangula - full-stack software engineer
       </p>
       <div className="preloader__bar" ref={barRef} />
     </div>
