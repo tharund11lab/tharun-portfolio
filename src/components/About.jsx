@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from '../lib/anim'
 import { profile, principles } from '../data/content'
 
-const STATEMENT = '4+ years turning ambiguous product ideas into production systems that serve millions.'
+const STATEMENT = '5 years turning ambiguous product ideas into production AI and distributed systems that serve millions.'
 
 // Big Archivo statement scrubs word-by-word from faint → full ink;
 // principle cards stagger in beneath, Swiss arrows and hairlines.

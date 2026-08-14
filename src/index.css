@@ -524,7 +524,8 @@ img { max-width: 100%; display: block; }
 
 /* ── Experience (pinned horizontal pages) ──────────────────── */
 .exp { padding: 0; }
-.exp__head { padding: var(--section-pad) 0 0; }
+/* padding-top only — shorthand here would wipe .wrap's gutter */
+.exp__head { padding-top: var(--section-pad); }
 .exp__track-wrap { overflow: hidden; position: relative; }
 .exp__track { display: flex; will-change: transform; }
 .exp-panel {

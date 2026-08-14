@@ -92,7 +92,7 @@ export default function Hero({ ready }) {
               <div className="hero__photo-wrap" ref={tiltRef} data-cursor="hello">
                 <img className="hero__photo" src="/profile.jpg" alt={profile.name} />
               </div>
-              <span className="hero__badge">Full-Stack Engineer • AI &amp; Distributed Systems</span>
+              <span className="hero__badge">Software Engineer • Applied AI &amp; Distributed Systems</span>
               <figcaption className="hero__caption">
                 <span>{profile.name}</span>
                 <span>{profile.location.split(',')[0]}</span>
@@ -110,12 +110,12 @@ export default function Hero({ ready }) {
                 <span className="line"><span>{lastName}<span className="dot">.</span></span></span>
               </h1>
               <p className="hero__sub" style={{ visibility: 'hidden' }}>
-                Full-Stack Software Engineer at <strong>Walmart Global Tech</strong>
+                Applied AI &amp; Full-Stack Engineer at <strong>Walmart Global Tech</strong>
               </p>
               <p className="hero__tagline" style={{ visibility: 'hidden' }}>{profile.tagline}</p>
               <div className="hero__ctas" style={{ visibility: 'hidden' }}>
                 <a className="btn btn--solid" href="#experience"><span>View my work ↓</span></a>
-                <a className="btn btn--line" href="/Tharun_Derangula_Fullstack_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a className="btn btn--line" href="/Tharun_Derangula_Resume.pdf" target="_blank" rel="noopener noreferrer">
                   <span>Download Resume</span>
                 </a>
                 <a className="btn btn--line" href={`mailto:${profile.email}`}><span>Email</span></a>

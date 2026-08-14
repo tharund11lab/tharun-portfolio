@@ -24,18 +24,18 @@ export default function Preloader({ onDone }) {
 
     tl.to(counter, {
       v: 100,
-      duration: 1.7,
+      duration: 0.65,
       ease: 'power2.inOut',
       onUpdate: () => {
         if (numRef.current) numRef.current.textContent = Math.round(counter.v)
       },
     })
-      .to(barRef.current, { scaleX: 1, duration: 1.7, ease: 'power2.inOut' }, 0)
+      .to(barRef.current, { scaleX: 1, duration: 0.65, ease: 'power2.inOut' }, 0)
       .to(rootRef.current, {
         yPercent: -100,
-        duration: 0.85,
+        duration: 0.5,
         ease: 'power4.inOut',
-      }, '+=0.15')
+      }, '+=0.05')
       .set(rootRef.current, { display: 'none' })
 
     return () => tl.kill()
@@ -48,7 +48,7 @@ export default function Preloader({ onDone }) {
         <sup>%</sup>
       </div>
       <p className="preloader__tag">
-        Tharun Derangula - full-stack software engineer
+        Tharun Derangula - software engineer, applied AI &amp; full-stack
       </p>
       <div className="preloader__bar" ref={barRef} />
     </div>
