@@ -34,6 +34,8 @@ export default function Hero({ ready }) {
         .fromTo('.hero__scroll', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, '-=0.4')
 
       // Content drifts up + fades as you scroll out of the hero
+      const mm = gsap.matchMedia()
+      mm.add('(min-width: 860px)', () => {
       gsap.to('.hero__grid', {
         yPercent: -10,
         autoAlpha: 0.3,
@@ -44,6 +46,7 @@ export default function Hero({ ready }) {
           end: 'bottom 35%',
           scrub: true,
         },
+      })
       })
     }, rootRef)
     return () => ctx.revert()

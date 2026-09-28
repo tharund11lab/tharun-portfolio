@@ -3,12 +3,13 @@ import { gsap } from '../lib/anim'
 import { projects } from '../data/content'
 
 // Each experience is a full page that slides in from the right, one by
-// one, while the section is pinned — snapping so every role settles
-// fully in view. Ghost index numbers parallax behind. Mobile stacks.
-export default function Experience() {
+// one, continuously following scroll while pinned.
+// Mobile stacks vertically.
+export default function Experience({ lenis }) {
   const rootRef = useRef(null)
   const trackRef = useRef(null)
   const barRef = useRef(null)
+  const timelineRef = useRef(null)
   const [active, setActive] = useState(0)
 
   useEffect(() => {
@@ -18,34 +19,34 @@ export default function Experience() {
       const track = trackRef.current
       const total = projects.length
 
-      const tween = gsap.to(track, {
+      let lastActive = -1
+      const timeline = gsap.to(track, {
         x: () => -(track.scrollWidth - window.innerWidth),
         ease: 'none',
+        onUpdate: function () {
+          const progress = this.progress()
+          const nextActive = Math.round(progress * (total - 1))
+          if (nextActive !== lastActive) {
+            lastActive = nextActive
+            setActive(nextActive)
+          }
+          if (barRef.current) {
+            barRef.current.style.transform = `scaleX(${progress})`
+          }
+        },
         scrollTrigger: {
           trigger: rootRef.current.querySelector('.exp__track-wrap'),
           pin: true,
-          scrub: 0.6,
-          snap: { snapTo: 1 / (total - 1), duration: 0.4, ease: 'power2.out' },
+          // Lenis already smooths scrolling; avoid a second trailing animation.
+          scrub: true,
           start: 'top top',
-          end: () => `+=${track.scrollWidth - window.innerWidth}`,
+          end: () => `+=${(track.scrollWidth - window.innerWidth) * 1.25}`,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (barRef.current) {
-              barRef.current.style.transform = `scaleX(${self.progress})`
-            }
-            setActive(Math.round(self.progress * (total - 1)))
-          },
         },
       })
+      timelineRef.current = timeline
 
-      // Ghost numbers drift opposite the track for depth
-      gsap.utils.toArray('.exp-panel__bg').forEach((el) => {
-        gsap.to(el, {
-          xPercent: -14,
-          ease: 'none',
-          scrollTrigger: { containerAnimation: tween, trigger: el, scrub: true },
-        })
-      })
+      return () => { timelineRef.current = null }
     })
 
     mm.add('(max-width: 899px), (prefers-reduced-motion: reduce)', () => {
@@ -63,6 +64,18 @@ export default function Experience() {
     return () => mm.revert()
   }, [])
 
+  const goToSlide = (index) => {
+    const timeline = timelineRef.current
+    if (!timeline) return
+    const target = Math.max(0, Math.min(projects.length - 1, index))
+    const progress = target / Math.max(1, projects.length - 1)
+    const trigger = timeline.scrollTrigger
+    const scroll = trigger.start + progress * (trigger.end - trigger.start)
+    // Use the same scrolling engine as wheel input for a continuous transition.
+    if (lenis?.current) lenis.current.scrollTo(scroll, { duration: 0.65 })
+    else window.scrollTo({ top: scroll, behavior: 'smooth' })
+  }
+
   return (
     <section className="section exp" id="experience" ref={rootRef}>
       <div className="exp__head wrap">
@@ -75,6 +88,11 @@ export default function Experience() {
       </div>
 
       <div className="exp__track-wrap">
+        <div className="exp__controls" aria-label="Experience slide controls">
+          <button type="button" onClick={() => goToSlide(active - 1)} disabled={active === 0}>← Previous</button>
+          <span aria-live="polite">{active + 1} / {projects.length}</span>
+          <button type="button" onClick={() => goToSlide(active + 1)} disabled={active === projects.length - 1}>Next →</button>
+        </div>
         <div className="exp__track" ref={trackRef}>
           {projects.map((p) => (
             <article className="exp-panel" key={p.id}>

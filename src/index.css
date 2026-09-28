@@ -242,7 +242,14 @@ img { max-width: 100%; display: block; }
   transition: transform 0.4s var(--ease);
 }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left center; }
-@media (max-width: 860px) { .nav__links { display: none; } }
+@media (max-width: 860px) {
+  .nav { background: var(--paper); border-bottom: 1px solid var(--rule); }
+  .nav__inner { flex-wrap: wrap; gap: 0.45rem; padding-top: 0.65rem; padding-bottom: 0.4rem; }
+  .nav__links { width: 100%; justify-content: space-between; gap: 0.35rem; }
+  .nav__link { font-size: 0.6rem; padding: 0.55rem 0; }
+}
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+section[id] { scroll-margin-top: 6rem; }
 
 /* ── Buttons — sharp Swiss rectangles ──────────────────────── */
 .btn {
@@ -406,7 +413,11 @@ img { max-width: 100%; display: block; }
 }
 /* stacked layout only on small screens — never on desktop */
 @media (max-width: 859px) {
-  .hero__grid { flex-direction: column; gap: 2.2rem; }
+  .hero { min-height: auto; padding: 7rem 0 3rem; }
+  .hero__grid { flex-direction: column-reverse; gap: 3rem; }
+  .hero__kicker { margin-bottom: 0.9rem; }
+  .hero__sub, .hero__tagline { margin-top: 0.9rem; }
+  .hero__ctas { margin-top: 1.3rem; }
   .hero__half { flex: 0 0 auto; width: 100%; }
   .hero__figure { width: 100%; max-width: 16.5rem; }
   .hero__scroll { display: none; }
@@ -644,6 +655,11 @@ img { max-width: 100%; display: block; }
   .exp__track { display: block; }
   .exp-panel { width: auto; min-height: 0; border-right: 0; border-bottom: 1px solid var(--rule); }
   .exp-panel__metrics { grid-template-columns: repeat(2, 1fr); }
+  .exp-panel__company, .exp-panel__meta, .exp-panel__project,
+  .exp-panel__story, .exp-panel__stackwrap { max-width: 100%; }
+  .exp-panel__inner { padding-bottom: 11rem; }
+  .exp-panel__bg { font-size: 8rem; bottom: 1.5rem; }
+  .exp__head .shead__note { display: none; }
   .exp__progress { display: none; }
 }
 
@@ -821,14 +837,15 @@ img { max-width: 100%; display: block; }
 
   /* Hero CTAs: one compact horizontal row */
   .hero__ctas {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 0.4rem;
   }
   .hero__ctas .btn {
     flex: 0 1 auto;
-    padding: 0.6rem 0.7rem;
-    font-size: 0.54rem;
+    min-height: 44px;
+    padding: 0.7rem 0.8rem;
+    font-size: 0.6rem;
     letter-spacing: 0.06em;
     white-space: nowrap;
   }
@@ -844,3 +861,27 @@ img { max-width: 100%; display: block; }
   body, a, button { cursor: auto; }
   .cursor-dot, .cursor-ring { display: none; }
 }
+
+/* Manual slide navigation stays at the top of the pinned viewport. */
+.exp__controls {
+  position: absolute; top: 0.75rem; right: var(--gutter); z-index: 5;
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--paper); border: 1px solid var(--rule);
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+}
+.exp__controls button { min-height: 44px; padding: 0 0.5rem; }
+.exp__controls button:hover:not(:disabled) { color: var(--accent); }
+.exp__controls button:disabled { opacity: 0.35; cursor: default; }
+.exp__controls button:focus-visible { outline: 2px solid var(--accent); }
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .exp__controls { display: none; }
+}
+
+/* Thin accent line tracking page scroll progress. */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 8500;
+  background: var(--accent); transform-origin: left center; transform: scaleX(0);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }
