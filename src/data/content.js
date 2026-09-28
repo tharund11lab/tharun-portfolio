@@ -13,9 +13,9 @@ export const profile = {
   email: 'dtharun209@gmail.com',
   phone: '+1 (408) 652-9472',
   tagline:
-    'I build production AI and distributed systems: LLM and RAG experiences for Walmart’s Sparky shopping agent, running across millions of daily events.',
+    'I build LLM and RAG features for Walmart’s Sparky shopping assistant, on commerce systems handling 20M+ daily events.',
   intro:
-    'Software engineer with 5 years building production AI and distributed systems in Python, Java, TypeScript, React, and the cloud. At Walmart I ship LLM and RAG experiences for Sparky, the AI shopping agent, including vector retrieval and evaluation pipelines operating across millions of daily events. I own features end to end, from prompt orchestration and pgvector tuning to Kafka services, Kubernetes deploys, and the observability that keeps them honest.',
+    'Software engineer with five years building full-stack applications and distributed systems in Python, Java, and TypeScript. At Walmart I develop LLM and RAG features for Sparky, the AI shopping assistant: vector retrieval, evaluation pipelines, and cart services inside commerce systems handling 20M+ daily events. I own features end to end, from prompt orchestration and pgvector tuning to Kafka services, Kubernetes deploys, and the observability that keeps them honest.',
   links: [
     { label: 'GitHub', href: 'https://github.com/', handle: '@tharun' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/tharund11/', handle: 'in/tharund11' },
@@ -25,7 +25,7 @@ export const profile = {
 
 // Headline stats for the hero ribbon + metrics band
 export const headlineStats = [
-  { value: 5, suffix: '', label: 'Years shipping production systems' },
+  { value: 20, suffix: 'M+', label: 'Daily shopping events on systems I build' },
   { value: 20, suffix: '%', label: 'AI recommendation relevance lift in A/B tests' },
   { value: 35, suffix: '%', label: 'p95 latency cut on hot-path APIs' },
   { value: 85, suffix: '%', label: 'Test coverage held on owned services' },
@@ -40,9 +40,10 @@ export const projects = [
     period: 'Apr 2025 - Present',
     region: 'USA',
     narrative: [
-      'Sparky is Walmart’s AI shopping agent: customers discover products, compare options, and get personalized recommendations through natural-language conversation. I ship the customer-facing conversational shopping and cart features across web and mobile in React, Next.js, and TypeScript, working with product, design, and ML from experimentation through launch.',
-      'On the AI side I build Python and FastAPI services for prompt orchestration, embedding generation, and retrieval-quality evaluation. Python RAG evaluation pipelines, Walmart’s Wallaby LLM through the Element ML Platform, and pgvector retrieval tuning lifted AI recommendation relevance 20% in A/B testing and raised add-to-cart conversion, with pytest regression suites and GitHub Actions quality gates catching RAG failures before release.',
-      'Underneath sit cart auto-build and intent-routing microservices in Java, Spring Boot, Kafka, and PostgreSQL processing millions of daily shopping events, with idempotent retries, dead-letter queues, and near real-time GCP Pub/Sub pipelines for inventory and fulfillment. Redis caching, connection pooling, and query-plan tuning cut p95 latency 35% on hot recommendation endpoints, holding sub-50ms median through seasonal spikes, while Docker, Kubernetes, Terraform, WCNP, and GitHub Actions enable zero-downtime releases with Datadog and Grafana observability.',
+      'Sparky is Walmart’s AI shopping assistant: customers discover products, compare options, and get personalized recommendations through natural-language conversation. I ship its conversational shopping and cart features across web and mobile in React, Next.js, and TypeScript, connecting the UI to Python and Java services and Walmart’s Wallaby LLM.',
+      'On the AI side I build Python and FastAPI services for prompt orchestration, embedding generation, and retrieval evaluation. RAG evaluation pipelines, pgvector retrieval tuning, and Wallaby integration through the Element ML Platform improved recommendation relevance 20% in A/B tests, with pytest regression suites catching RAG failures and GitHub Actions quality gates enforcing 85% minimum test coverage.',
+      'Underneath sit intent-routing and cart auto-build services in Java, Spring Boot, Kafka, and PostgreSQL, connecting conversational requests to cart workflows in systems processing 20M+ daily shopping events. Redis caching, connection pooling, and index tuning cut recommendation p95 latency 35%, holding sub-50ms median at 5K+ requests/sec through holiday peaks. APIs are secured with OAuth 2.0, JWT, and RBAC, and Docker, Kubernetes, Terraform, and GitHub Actions on WCNP halved deploys from about 20 to 10 minutes with zero downtime.',
+      'I author design docs and lead architecture reviews for cart automation, intent routing, and RAG evaluation, and use Claude Code, Copilot, Codex, and Gemini for refactoring and test generation, cutting PR turnaround by roughly a third with CI checks required before every merge.',
     ],
     stack: ['Python', 'FastAPI', 'RAG', 'pgvector', 'LLM Evaluation', 'React', 'Next.js', 'TypeScript', 'Java', 'Spring Boot', 'Kafka', 'PostgreSQL', 'Redis', 'GCP Pub/Sub', 'Kubernetes', 'Terraform', 'GitHub Actions', 'Datadog'],
   },
@@ -54,9 +55,9 @@ export const projects = [
     period: 'Jan 2024 - Dec 2024',
     region: 'USA',
     narrative: [
-      'Campus Hub is a unified student and faculty platform that brings Owl Express, D2L Brightspace, DegreeWorks, and KSUMail together behind a single responsive interface. Before it, students juggled several disconnected systems to register for classes, track grades, and check financial aid - slow, confusing, and error-prone, especially during peak registration.',
-      'I built the platform end to end: the React, Next.js, and TypeScript front end, the Node.js and Spring Boot APIs behind it, and the integrations into Ellucian Banner and DegreeWorks with query tuning and caching to keep dashboards fast. I owned the Java/Spring Boot services over PostgreSQL and the reconciliation layer that keeps enrollment, grades, and financial-aid data consistent across every connected system.',
-      'The result was one calm front door to the university: dashboards loaded noticeably faster, manual data corrections across systems dropped sharply, and zero-downtime deploys on AWS with Docker and GitHub Actions let us ship through peak registration without disrupting students.',
+      'Campus Hub is a unified student and faculty platform that brings Owl Express, D2L Brightspace, DegreeWorks, and KSUMail together behind one responsive interface for 40,000+ students and faculty. Before it, students juggled disconnected systems to register, track grades, and check financial aid.',
+      'I built it in React, Next.js, and TypeScript, integrated university single sign-on with role-based access and protected API routes, and developed Node.js and Spring Boot REST APIs for Ellucian Banner and DegreeWorks that improved dashboard load time 30%. Java and Spring Boot services on PostgreSQL synchronized enrollment, grades, and financial aid through REST APIs and webhooks, reducing manual data correction 40%.',
+      'Docker and GitHub Actions deploys to AWS EC2, with static assets on S3, halved deployment cycle time and kept releases smooth through peak registration, while 80%+ Jest and React Testing Library coverage caught UI regressions early.',
     ],
     stack: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Spring Boot', 'PostgreSQL', 'Redis', 'REST APIs', 'AWS', 'Docker', 'GitHub Actions'],
   },
@@ -68,9 +69,9 @@ export const projects = [
     period: 'May 2020 - Dec 2022',
     region: 'India',
     narrative: [
-      'This was an enterprise banking platform for invoice tracking and payment workflows used by corporate banking customers across regions. Payments at this scale cannot drop or double-charge, so the system needed exactly-once processing and resilience under heavy, bursty load - while a legacy monolith underneath was slowing every release down to days.',
-      'I worked across the stack: responsive React and TypeScript interfaces backed by Java and Spring Boot APIs, and the event-driven payment engine built on Kafka with idempotent retries and dead-letter queues so transactions stayed correct under pressure. I also built ETL pipelines in Python, pandas, SQL, and BigQuery that cut batch processing time 45% and fed partitioned warehouse tables to finance and compliance, with Airflow-orchestrated validation and reconciliation checks that dropped data-quality incidents 35%.',
-      'I helped modernize the legacy backend into microservices on Docker, Terraform, and Google Cloud (Cloud Run and GKE), which cut release cycles from days to hours, reduced peak-period response times, and brought down production defects after the migration - a more reliable payments platform that the business could evolve quickly.',
+      'An enterprise banking platform for invoice tracking and payment workflows used by corporate banking customers across regions. Payments at this scale cannot drop or double-process, so the system needed correctness and resilience under heavy, bursty settlement load.',
+      'I built React and TypeScript frontends backed by Java and Spring Boot APIs, tuned connection pooling for peak banking activity, and developed real-time Kafka transaction pipelines with idempotent consumers and dead-letter queues. ETL pipelines in Python, pandas, SQL, and BigQuery cut batch processing time 45%, and Airflow validation and reconciliation checks reduced data-quality incidents 35%.',
+      'I also helped modernize legacy banking backends into microservices on Docker, Terraform, GCP Cloud Run, and GKE, reducing production defects 40% through TDD with JUnit and pytest and automated GitHub Actions checks.',
     ],
     stack: ['React', 'TypeScript', 'Java', 'Spring Boot', 'Kafka', 'PostgreSQL', 'Redis', 'Python', 'pandas', 'Airflow', 'BigQuery', 'Docker', 'Terraform', 'GKE', 'Cloud Run'],
   },
@@ -111,7 +112,7 @@ export const stackGroups = [
   },
   {
     label: 'AI Developer Tools',
-    items: ['Claude Code', 'GitHub Copilot', 'Cursor', 'Codex'],
+    items: ['Claude Code', 'GitHub Copilot', 'Codex', 'Gemini', 'Cursor'],
   },
 ]
 
@@ -130,7 +131,7 @@ export const principles = [
   },
   {
     k: 'Build with AI, deliberately',
-    v: 'Claude Code, Copilot, Cursor, and Codex for scaffolding and refactors - paired with judgment, tests, and review, not in place of them.',
+    v: 'Claude Code, Copilot, Codex, and Gemini for scaffolding and refactors - paired with judgment, tests, and review, not in place of them.',
   },
 ]
 
